@@ -9,7 +9,7 @@ const MongoClient = require('mongodb').MongoClient
 require('dotenv').config()
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 const uri = process.env.DB_MLAB
 
 
@@ -31,6 +31,10 @@ MongoClient.connect(uri, (err,database)=>{
   		res.json(quotes);
   	});
   });
+
+  app.get('*', (req,res)=>{
+  	res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  })
   	
 });
 
