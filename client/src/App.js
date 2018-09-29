@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './App.css'
 
 class App extends Component {
  
@@ -10,11 +10,8 @@ class App extends Component {
     quotes: [] 
     };
 
+    this.getQuotes = this.getQuotes.bind(this);
   }
-
-   refreshPage(){ 
-    window.location.reload(); 
-   }
 
   getQuotes(){
      fetch('/api/quotes')
@@ -28,11 +25,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App-intro ">
          <h1>Quotes</h1>
            {this.state.quotes.map(quote =>
                <div key={quote._id}> "{quote.quote}" - {quote.name}</div>
            )}
+           <button onClick={this.getQuotes}>refresh</button>
         </div>
       )}
 }
