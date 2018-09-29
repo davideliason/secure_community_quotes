@@ -6,6 +6,7 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
+const uuid = require('uuid');
 require('dotenv').config()
 
 const app = express()
@@ -28,9 +29,15 @@ MongoClient.connect(uri, (err,database)=>{
 
   app.get('/api/quotes', (req,res,next) => {
   	db.collection('quotes').find().toArray((err,quotes)=>{
+      console.log("sent");
   		res.json(quotes);
   	});
   });
+
+  app.get('/uuid', (req,res)=>{
+    const uniqueId= uuid();
+    res.send(`here is unique id: ${uniqueId}`);
+  })
 
   app.get('*', (req,res)=>{
   	res.sendFile(path.join(__dirname+'/client/build/index.html'));
