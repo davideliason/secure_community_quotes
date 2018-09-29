@@ -6,7 +6,8 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
-const uuid = require('uuid');
+const uuid = require('uuid')
+const session = require('express-session')
 require('dotenv').config()
 
 const app = express()
@@ -20,6 +21,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware')
+    console.log(req.sessionID)
+    return uuid() // use UUIDs for session IDs
+  },
+  secret: 'coffee love',
+  resave: false,
+  saveUninitialized: true
+}))
+
+
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // API ENDPOINT
@@ -30,6 +43,8 @@ MongoClient.connect(uri, (err,database)=>{
   app.get('/api/quotes', (req,res,next) => {
   	db.collection('quotes').find().toArray((err,quotes)=>{
       console.log("sent");
+      console.log(res);
+      console.log("here is sessionId: " + req.sessionID)
   		res.json(quotes);
   	});
   });
