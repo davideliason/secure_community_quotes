@@ -5,11 +5,16 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "run": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davideliason/secure_community_quotes.git"
+  },
+  "engines" : {
+    "node" : "8.11.4"
   },
   "keywords": [
     "MERN"
