@@ -11,3 +11,11 @@ Woot!
 
 ## Modules Used
 express   : server
+path : file paths connectivity
+favicon : that neat pic on browser
+logger : useful data per processes
+body-parser : to get form inputted data from browser
+mongodb : our db
+dotenv : hidden environmental variables
+
+
