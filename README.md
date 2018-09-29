@@ -8,6 +8,11 @@ This is a skill-progression from [community quotes](https://github.com/davidelia
 
 Woot!
 
+## Functionality
+
+## Technical
+I started out by creating a base express server and a project subfolder 'client' which held the CRA. On the server side, created the API server wherein data served in JSON format and also a wildcare route wherein all other routes other than that API request would serve the react static page. That's a good thing, because we want all the heavy lifting to be doine on the react side; within that CRA, we'll still do some fetch calls, such as CRUD functionality, so a little later on we'll be building out some more routes within express. But for now, those two routes are enough.
+
 
 ## Modules Used
 express   : server
