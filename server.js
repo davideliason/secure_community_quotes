@@ -22,10 +22,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // API ENDPOINT
-MongoClient.connect(uri, (err,db)=>{
-  console.log('db connected')
-  app.get('/api/quotes', (req, res) => res.json([{'name' : 'David'}]))
+MongoClient.connect(uri, (err,database)=>{
+  console.log('database connected')
+  db = database.db('secure_community_quotes')
 
+  app.get('/api/quotes', (req,res,next) => {
+  	db.collection('quotes').find().toArray((err,quotes)=>{
+  		res.json(quotes);
+  	});
+  });
+  	
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
