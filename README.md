@@ -7,3 +7,7 @@
 This is a skill-progression from [community quotes](https://github.com/davideliason/community_quotes), adding on cookies, sessions, passport for user login and authentication.
 
 Woot!
+
+
+## Modules Used
+express   : server
