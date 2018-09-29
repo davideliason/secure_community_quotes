@@ -15,7 +15,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('/api/quotes', (req, res) => res.json([{'name' : 'David'}]))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
