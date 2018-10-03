@@ -22,5 +22,5 @@ logger : useful data per processes
 body-parser : to get form inputted data from browser
 mongodb : our db
 dotenv : hidden environmental variables
-uuid : easy way to get unique strings
+uuid : module to get unique strings
 

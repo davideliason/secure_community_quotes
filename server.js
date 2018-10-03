@@ -40,6 +40,10 @@ MongoClient.connect(uri, (err,database)=>{
   console.log('database connected')
   db = database.db('secure_community_quotes')
 
+  app.get('/', (req,res)=> {
+    res.send('home page');
+  });
+
   app.get('/api/quotes', (req,res,next) => {
   	db.collection('quotes').find().toArray((err,quotes)=>{
       console.log("sent");
@@ -60,5 +64,5 @@ MongoClient.connect(uri, (err,database)=>{
   	
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Nifty app listening on port ${port}!`))
 
