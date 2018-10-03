@@ -8,6 +8,7 @@ const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
 const uuid = require('uuid')
 const session = require('express-session')
+const FileStore = require('session-file-store')(session);
 require('dotenv').config()
 
 const app = express()
@@ -27,7 +28,8 @@ app.use(session({
     console.log(req.sessionID)
     return uuid() // use UUIDs for session IDs
   },
-  secret: 'coffee love',
+  store: new FileStore(),
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -41,7 +43,16 @@ MongoClient.connect(uri, (err,database)=>{
   db = database.db('secure_community_quotes')
 
   app.get('/', (req,res)=> {
-    res.send('home page');
+    if(req.session.numbers){
+      req.session.numbers++;
+      res.setHeader('Content-Type', 'text/html');
+      res.write('<p>views: ' + req.session.numbers + '</p>');
+      res.end();
+    }
+    else{
+      req.session.numbers = 1;
+      res.end('Use of session');
+    }
   });
 
   app.get('/api/quotes', (req,res,next) => {
