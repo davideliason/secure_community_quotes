@@ -26,4 +26,5 @@ mongodb : our db
 dotenv : hidden environmental variables
 uuid : module to get unique strings
 session-file-store: used to create a store for session data persistence by using a local file for capturing session object key-values
+passport & passport-local : authentication
 
