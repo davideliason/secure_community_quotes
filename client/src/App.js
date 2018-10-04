@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
+import SignUpForm from './SignUpForm.js';
 
 class App extends Component {
  
@@ -26,7 +27,9 @@ class App extends Component {
   render() {
     return (
       <div className="App-intro ">
+        <SignUpForm />
 
+        <h3>Login</h3>
         <form action="/login" method="POST">
          <input type="text" placeholder="email" name="email" />
          <input type="password" placeholder="password" name="password" />

@@ -73,7 +73,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({
   genid: (req) => {
     console.log('Inside the session middleware')
-    console.log(req.sessionID)
+    console.log("here is sessionId :" + req.sessionID)
     return uuid() // use UUIDs for session IDs
   },
   store: new FileStore(),
@@ -94,6 +94,7 @@ MongoClient.connect(uri, (err,database)=>{
   db = database.db('secure_community_quotes')
 
   app.get('/', (req,res)=> {
+    console.log(req.sessionID);
     if(req.session.numbers){
       req.session.numbers++;
       res.setHeader('Content-Type', 'text/html');
@@ -143,6 +144,10 @@ MongoClient.connect(uri, (err,database)=>{
 
     console.log("new quote posted" + req.body.name);
     res.send('name added successfully');
+  });
+
+  app.post('/signup', (req,res)=>{
+    console.log("signup form submitted");
   });
 
   app.get('/api/quotes', (req,res,next) => {
