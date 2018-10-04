@@ -11,11 +11,15 @@ const session = require('express-session')
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const passportLocalMongoose = require('passport-local-mongoose')
+
 require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT || 5000
 const uri = process.env.DB_MLAB
+
+let mongoose = require('mongoose');
 // // configure passport local strategy
 // passport.use(new LocalStrategy(
 //   { usernameField: 'email' },
@@ -62,25 +66,35 @@ const uri = process.env.DB_MLAB
 //   {id: 'itismedavid', email: 'test@test.com', password: 'password'}
 // ]
 
+// requires the model with Passport-Local Mongoose plugged in
+// const User = require('./models/user');
+ 
+// USE "createStrategy" INSTEAD OF "authenticate"
+// This uses and configures passport-local behind the scenes
+// passport.use(User.createStrategy());
+ 
+// use static serialize and deserialize of model for passport session support
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 
 // MIDDLEWARE
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(session({
-  genid: (req) => {
-    console.log('Inside the session middleware')
-    console.log("here is sessionId :" + req.sessionID)
-    return uuid() // use UUIDs for session IDs
-  },
-  store: new FileStore(),
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true
-}))
+// app.use(session({
+//   genid: (req) => {
+//     console.log('Inside the session middleware')
+//     console.log("here is sessionId :" + req.sessionID)
+//     return uuid() // use UUIDs for session IDs
+//   },
+//   store: new FileStore(),
+//   secret: process.env.SECRET,
+//   resave: false,
+//   saveUninitialized: false
+// }))
 // // passport called after configured above
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -89,23 +103,24 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // API ENDPOINT
-MongoClient.connect(uri, (err,database)=>{
-  console.log('database connected')
-  db = database.db('secure_community_quotes')
+// MongoClient.connect(uri, (err,database)=>{
+  // console.log('database connected')
+  // db = database.db('secure_community_quotes')
 
-  app.get('/', (req,res)=> {
-    console.log(req.sessionID);
-    if(req.session.numbers){
-      req.session.numbers++;
-      res.setHeader('Content-Type', 'text/html');
-      res.write('<p>views: ' + req.session.numbers + '</p>');
-      res.end();
-    }
-    else{
-      req.session.numbers = 1;
-      res.end('Use of session');
-    }
-  });
+  // app.get('/', (req,res)=> {
+  //   console.log(req.sessionID);
+  //   console.log("here is session: " + req.session);
+  //   if(req.session.numbers){
+  //     req.session.numbers++;
+  //     res.setHeader('Content-Type', 'text/html');
+  //     res.write('<p>views: ' + req.session.numbers + '</p>');
+  //     res.end();
+  //   }
+  //   else{
+  //     req.session.numbers = 1;
+  //     res.end('Use of session');
+  //   }
+  // });
 
   // app.get('/login', (req, res) => {
   //   console.log('Inside GET /login callback function')
@@ -129,41 +144,44 @@ MongoClient.connect(uri, (err,database)=>{
 //   })(req, res, next);
 // })
 
-  app.post('/login', (req, res, next) => {
-    console.log("form inputted");
-  });
+// app.post('/login', passport.authenticate('LocalStrategy', {
+//     successRedirect: '/dashboard',
+//     failureRedirect: '/login'
+// }));
 
 
-  app.post('/newQuote', (req,res) => {
-    db.collection('quotes').insertOne(
-      {
-       "_id" : req.body.name + req.body.quote,
-       "name" : req.body.name,
-       "quote" : req.body.quote
-       });
+  // app.post('/signup', (req,res)=>{
+  //   console.log("signup form submitted");
+  //   db.collection('users').insertOne(
+  //   {
+  //       "_id" : req.body.email + req.body.password,
+  //       "email" : req.body.email,
+  //       "password" : req.body.password
+  //   });
+  // });
 
-    console.log("new quote posted" + req.body.name);
-    res.send('name added successfully');
-  });
 
-  app.post('/signup', (req,res)=>{
-    console.log("signup form submitted");
-    db.collection('users').insertOne(
-    {
-        "_id" : req.body.email + req.body.password,
-        "email" : req.body.email,
-        "password" : req.body.password
-    });
-  });
+  // app.post('/newQuote', (req,res) => {
+  //   db.collection('quotes').insertOne(
+  //     {
+  //      "_id" : req.body.name + req.body.quote,
+  //      "name" : req.body.name,
+  //      "quote" : req.body.quote
+  //      });
 
-  app.get('/api/quotes', (req,res,next) => {
-  	db.collection('quotes').find().toArray((err,quotes)=>{
-      console.log("sent");
-      console.log(res);
-      console.log("here is sessionId: " + req.sessionID)
-  		res.json(quotes);
-  	});
-  });
+  //   console.log("new quote posted" + req.body.name);
+  //   res.send('name added successfully');
+  // });
+
+
+  // app.get('/api/quotes', (req,res,next) => {
+  // 	db.collection('quotes').find().toArray((err,quotes)=>{
+  //     console.log("sent");
+  //     console.log(res);
+  //     console.log("here is sessionId: " + req.sessionID)
+  // 		res.json(quotes);
+  // 	});
+  // });
 
 //   app.get('/authrequired', (req, res) => {
 //   console.log('Inside GET /authrequired callback')
@@ -175,6 +193,10 @@ MongoClient.connect(uri, (err,database)=>{
 //   }
 // })
 
+  app.get('/', (req,res)=>{
+    res.send('hello from home route');
+  });
+
   app.get('/uuid', (req,res)=>{
     const uniqueId= uuid();
     res.send(`here is unique id: ${uniqueId}`);
@@ -184,7 +206,7 @@ MongoClient.connect(uri, (err,database)=>{
   	res.sendFile(path.join(__dirname+'/client/build/index.html'));
   })
   	
-});
+// });
 
 app.listen(port, () => console.log(`Nifty app listening on port ${port}!`))
 
