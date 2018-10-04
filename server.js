@@ -148,6 +148,12 @@ MongoClient.connect(uri, (err,database)=>{
 
   app.post('/signup', (req,res)=>{
     console.log("signup form submitted");
+    db.collection('users').insertOne(
+    {
+        "_id" : req.body.email + req.body.password,
+        "email" : req.body.email,
+        "password" : req.body.password
+    });
   });
 
   app.get('/api/quotes', (req,res,next) => {
