@@ -16,34 +16,34 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5000
 const uri = process.env.DB_MLAB
-// configure passport local strategy
-passport.use(new LocalStrategy(
-  { usernameField: 'email' },
-  (email, password, done) => {
-    console.log('Inside local strategy callback')
-    // here is where you make a call to the database
-    // to find the user based on their username or email address
-    // for now, we'll just pretend we found that it was users[0]
-    const user = users[0] 
-    // email and password are values from POSTed input form
-    if(email === user.email && password === user.password) {
-      console.log('Local strategy returned true')
-      return done(null, user)
-    }
-  }
-));
+// // configure passport local strategy
+// passport.use(new LocalStrategy(
+//   { usernameField: 'email' },
+//   (email, password, done) => {
+//     console.log('Inside local strategy callback')
+//     // here is where you make a call to the database
+//     // to find the user based on their username or email address
+//     // for now, we'll just pretend we found that it was users[0]
+//     const user = users[0] 
+//     // email and password are values from POSTed input form
+//     if(email === user.email && password === user.password) {
+//       console.log('Local strategy returned true')
+//       return done(null, user)
+//     }
+//   }
+// ));
 
-passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback; userID saved to store file')
-  done(null, user.id);
-});
+// passport.serializeUser((user, done) => {
+//   console.log('Inside serializeUser callback; userID saved to store file')
+//   done(null, user.id);
+// });
 
-passport.deserializeUser((id, done) => {
-  console.log('Inside deserializeUser callback')
-  console.log(`The user id passport saved in the session file store is: ${id}`)
-  const user = users[0].id === id ? users[0] : false; 
-  done(null, user);
-});
+// passport.deserializeUser((id, done) => {
+//   console.log('Inside deserializeUser callback')
+//   console.log(`The user id passport saved in the session file store is: ${id}`)
+//   const user = users[0].id === id ? users[0] : false; 
+//   done(null, user);
+// });
 
 // passport.deserializeUser((id, done) => {
 //  MongoClient.connect(uri, (err,database)=>{
@@ -58,13 +58,9 @@ passport.deserializeUser((id, done) => {
 // });
 
 
-// const app = express()
-// const port = process.env.PORT || 5000
-// const uri = process.env.DB_MLAB
-
-const users = [
-  {id: 'itismedavid', email: 'test@test.com', password: 'password'}
-]
+// const users = [
+//   {id: 'itismedavid', email: 'test@test.com', password: 'password'}
+// ]
 
 
 
@@ -85,9 +81,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-// passport called after configured above
-app.use(passport.initialize());
-app.use(passport.session());
+// // passport called after configured above
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -110,27 +106,31 @@ MongoClient.connect(uri, (err,database)=>{
     }
   });
 
-  app.get('/login', (req, res) => {
-    console.log('Inside GET /login callback function')
-    console.log(req.sessionID);
-    console.log(req.session.numbers);
-    res.send(`You got the login page!\n`)
-  });
+  // app.get('/login', (req, res) => {
+  //   console.log('Inside GET /login callback function')
+  //   console.log(req.sessionID);
+  //   console.log(req.session.numbers);
+  //   res.send(`You got the login page!\n`)
+  // });
+
+  // app.post('/login', (req, res, next) => {
+//     console.log('Inside POST /login callback')
+//     passport.authenticate('local', (err, user, info) => {
+//       console.log('Inside passport.authenticate() callback');
+//       console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+//     console.log(`req.user: ${JSON.stringify(req.user)}`)
+//     req.login(user, (err) => {
+//       console.log('Inside req.login() callback')
+//       console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+//       console.log(`req.user: ${JSON.stringify(req.user)}`)
+//       return res.send('You were authenticated & logged in!\n');
+//     })
+//   })(req, res, next);
+// })
 
   app.post('/login', (req, res, next) => {
-    console.log('Inside POST /login callback')
-    passport.authenticate('local', (err, user, info) => {
-      console.log('Inside passport.authenticate() callback');
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-    console.log(`req.user: ${JSON.stringify(req.user)}`)
-    req.login(user, (err) => {
-      console.log('Inside req.login() callback')
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-      console.log(`req.user: ${JSON.stringify(req.user)}`)
-      return res.send('You were authenticated & logged in!\n');
-    })
-  })(req, res, next);
-})
+    console.log("form inputted");
+  });
 
 
   app.post('/newQuote', (req,res) => {
@@ -154,15 +154,15 @@ MongoClient.connect(uri, (err,database)=>{
   	});
   });
 
-  app.get('/authrequired', (req, res) => {
-  console.log('Inside GET /authrequired callback')
-  console.log(`User authenticated? ${req.isAuthenticated()}`)
-  if(req.isAuthenticated()) {
-    res.send('super secret site via authentication endpoint\n')
-  } else {
-    res.redirect('/')
-  }
-})
+//   app.get('/authrequired', (req, res) => {
+//   console.log('Inside GET /authrequired callback')
+//   console.log(`User authenticated? ${req.isAuthenticated()}`)
+//   if(req.isAuthenticated()) {
+//     res.send('super secret site via authentication endpoint\n')
+//   } else {
+//     res.redirect('/')
+//   }
+// })
 
   app.get('/uuid', (req,res)=>{
     const uniqueId= uuid();
