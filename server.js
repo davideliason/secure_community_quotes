@@ -13,6 +13,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config()
 
+const app = express()
+const port = process.env.PORT || 5000
+const uri = process.env.DB_MLAB
 // configure passport local strategy
 passport.use(new LocalStrategy(
   { usernameField: 'email' },
@@ -42,10 +45,22 @@ passport.deserializeUser((id, done) => {
   done(null, user);
 });
 
+// passport.deserializeUser((id, done) => {
+//  MongoClient.connect(uri, (err,database)=>{
+//   console.log('database connected' + id);
+//   db = database.db('secure_community_quotes')
+//     db.collection('users').find({_id : id}, function(err,result){
+//       if(err) throw err;
+//       console.log("here is the result : " + result.password);
+//     });
 
-const app = express()
-const port = process.env.PORT || 5000
-const uri = process.env.DB_MLAB
+//   });
+// });
+
+
+// const app = express()
+// const port = process.env.PORT || 5000
+// const uri = process.env.DB_MLAB
 
 const users = [
   {id: 'itismedavid', email: 'test@test.com', password: 'password'}
