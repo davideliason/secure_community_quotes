@@ -26,6 +26,13 @@ class App extends Component {
   render() {
     return (
       <div className="App-intro ">
+
+        <form action="/login" method="POST">
+         <input type="text" placeholder="email" name="email" />
+         <input type="password" placeholder="password" name="password" />
+         <input type="submit" />
+        </form>
+
          <h1>Quotes</h1>
            {this.state.quotes.map(quote =>
                <div key={quote._id}> "{quote.quote}" - {quote.name}</div>
