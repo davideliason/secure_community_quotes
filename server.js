@@ -14,6 +14,8 @@ const session = require('express-session')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose')
+const dbConnection = require('./database/index.js');
+const user = require('./routes/user')
 
 require('dotenv').config()
 
@@ -37,9 +39,10 @@ app.get('/uuid', (req,res)=>{
   res.send(`here is unique id: ${uniqueId}`);
 })
 
-app.post('/signup', (req,res)=>{
-  console.log("posted signup");
-});
+// app.post('/signup', (req,res)=>{
+//   console.log("posted signup");
+// });
+app.use('/user', user);
 
   // app.get('/api/quotes', (req,res,next) => {
   //   db.collection('quotes').find().toArray((err,quotes)=>{

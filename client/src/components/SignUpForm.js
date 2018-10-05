@@ -29,8 +29,9 @@ class SignUpForm extends Component {
 
    handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted" + this.state.email);
-    axios.post('/', {
+    console.log("SignUpForm submitted with this email value :" + this.state.email);
+
+    axios.post('/signup', {
       email: this.state.email,
       password: this.state.password
     })
