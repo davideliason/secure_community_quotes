@@ -4,11 +4,13 @@ const path = require('path')
 const favicon = require('serve-favicon')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
+
 const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose');
+
 const uuid = require('uuid')
 const session = require('express-session')
-const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose')
@@ -19,7 +21,36 @@ const app = express()
 const port = process.env.PORT || 5000
 const uri = process.env.DB_MLAB
 
-let mongoose = require('mongoose');
+// MIDDLEWARE
+app.use(favicon(path.join(__dirname,'public','favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// ROUTES
+app.get('/', (req,res)=>{
+  res.send('hello from home route');
+  res.end();
+});
+
+app.get('/uuid', (req,res)=>{
+  const uniqueId= uuid();
+  res.send(`here is unique id: ${uniqueId}`);
+})
+
+  // app.get('/api/quotes', (req,res,next) => {
+  //   db.collection('quotes').find().toArray((err,quotes)=>{
+  //     console.log("sent");
+  //     console.log(res);
+  //     console.log("here is sessionId: " + req.sessionID)
+  //     res.json(quotes);
+  //   });
+  // });
+
+app.get('*', (req,res)=>{
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+})
 // // configure passport local strategy
 // passport.use(new LocalStrategy(
 //   { usernameField: 'email' },
@@ -78,11 +109,7 @@ let mongoose = require('mongoose');
 // passport.deserializeUser(User.deserializeUser());
 
 
-// MIDDLEWARE
-app.use(favicon(path.join(__dirname,'public','favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
 
 // app.use(session({
 //   genid: (req) => {
@@ -100,7 +127,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // app.use(passport.session());
 
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 // API ENDPOINT
 // MongoClient.connect(uri, (err,database)=>{
@@ -193,20 +220,9 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //   }
 // })
 
-  app.get('/', (req,res)=>{
-    res.send('hello from home route');
-  });
 
-  app.get('/uuid', (req,res)=>{
-    const uniqueId= uuid();
-    res.send(`here is unique id: ${uniqueId}`);
-  })
-
-  app.get('*', (req,res)=>{
-  	res.sendFile(path.join(__dirname+'/client/build/index.html'));
-  })
   	
 // });
 
-app.listen(port, () => console.log(`Nifty app listening on port ${port}!`))
+app.listen(port, () => console.log(` app listening on port ${port}!`))
 
