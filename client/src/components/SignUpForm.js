@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class SignUpForm extends Component {
  
@@ -28,7 +29,24 @@ class SignUpForm extends Component {
 
    handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted" + this.state.email)
+    console.log("submitted" + this.state.email);
+    axios.post('/', {
+      email: this.state.email,
+      password: this.state.password
+    })
+      .then(response => {
+        console.log(response);
+        if(response.data) {
+          console.log("successfully signed up");
+          this.setState({
+            redirectTo: '/login'
+          });
+        } else {
+          console.log("sign up error");
+        }
+      }).catch(error => {
+        console.log("sign up error");
+      });
    };
 
 
