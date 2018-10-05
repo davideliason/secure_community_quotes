@@ -37,6 +37,10 @@ app.get('/uuid', (req,res)=>{
   res.send(`here is unique id: ${uniqueId}`);
 })
 
+app.post('/signup', (req,res)=>{
+  console.log("posted signup");
+});
+
   // app.get('/api/quotes', (req,res,next) => {
   //   db.collection('quotes').find().toArray((err,quotes)=>{
   //     console.log("sent");
