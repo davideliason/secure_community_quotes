@@ -9,17 +9,17 @@ class Quotes extends Component {
     quotes: [] 
     };
 
-    this.getQuotes = this.getQuotes.bind(this);
+    // this.getQuotes = this.getQuotes.bind(this);
   }
 
-  getQuotes(){
-     fetch('/api/quotes')
-      .then(res => res.json())
-      .then(quotes => this.setState({ quotes }));
-  }
+  // getQuotes(){
+  //    fetch('/api/quotes')
+  //     .then(res => res.json())
+  //     .then(quotes => this.setState({ quotes }));
+  // }
 
   componentDidMount() {
-   this.getQuotes();
+   // this.getQuotes();
   }
 
   render() {

@@ -15,7 +15,6 @@ class App extends Component {
     return (
       <div className="App-intro ">
           <SignUpForm />
-          <LoginForm />
           <Quotes />
       </div>
     )}

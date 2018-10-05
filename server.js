@@ -29,13 +29,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // ROUTES
-app.get('/', (req,res)=>{
-  res.send('hello from home route');
-  res.end();
-});
+
 
 app.get('/uuid', (req,res)=>{
   const uniqueId= uuid();
+  console.log(uniqueId + " is uniqueId");
   res.send(`here is unique id: ${uniqueId}`);
 })
 
