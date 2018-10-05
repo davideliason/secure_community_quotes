@@ -14,13 +14,11 @@ class App extends Component {
   render() {
     return (
       <div className="App-intro ">
-
-         
           <SignUpForm />
           <LoginForm />
           <Quotes />
-        </div>
-      )}
+      </div>
+    )}
 }
 
 export default App;
