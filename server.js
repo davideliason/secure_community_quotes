@@ -4,6 +4,7 @@ const path = require('path')
 const favicon = require('serve-favicon')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
+require('dotenv').config()
 
 const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
@@ -17,7 +18,6 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const dbConnection = require('./database/index.js');
 const user = require('./routes/user')
 
-require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT || 5000
