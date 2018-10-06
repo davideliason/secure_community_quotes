@@ -20,6 +20,18 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get('/usersList', function(req, res) {
+  User.find({}, function(err, users) {
+    var userMap = {};
+
+    users.forEach(function(user) {
+      userMap[user._id] = user;
+    });
+
+    res.send(userMap);  
+  });
+});
+
 app.post("/adduser", (req, res) => {
     var myData = new User(req.body);
     myData.save()
