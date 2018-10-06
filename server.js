@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-var port = 5000;
+var port = process.env.PORT || 5000;
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -8,7 +9,7 @@ require('dotenv').config()
 
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_MLAB);
+mongoose.connect(process.env.DB_MLAB, { useNewUrlParser: true });
 var userSchema = new mongoose.Schema({
     email: String,
     password: String
