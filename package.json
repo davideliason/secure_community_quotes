@@ -1,23 +1,18 @@
 {
   "name": "secure_community_quotes",
   "version": "0.1.0",
-  "description": "save quotes using MERN",
+  "description": "mern",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
     "start": "node server.js",
-    "dev:server": "nodemon --ignore sessions/ server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davideliason/secure_community_quotes.git"
   },
-  "engines": {
-    "node": "8.11.4"
-  },
   "keywords": [
-    "MERN"
+    "mern"
   ],
   "author": "David Eliason",
   "license": "MIT",
@@ -26,20 +21,7 @@
   },
   "homepage": "https://github.com/davideliason/secure_community_quotes#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.3",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "mongodb": "^3.1.6",
-    "mongoose": "^5.3.1",
-    "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1",
-    "serve-favicon": "^2.5.0",
-    "session-file-store": "^1.2.0",
-    "uuid": "^3.3.2"
+    "express": "^4.16.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
