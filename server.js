@@ -1,24 +1,22 @@
-// dependencies
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-//config
+require('dotenv').config();
+mongoose.Promise = global.Promise;
 const app = express();
 const port = process.env.PORT || 5000;
-
-mongoose.Promise = global.Promise;
+const uri = process.env.DB_MLAB;
+var users = require('./routes/users');
 
 mongoose.connect('mongodb://localhost/user')
-  .then(() =>  console.log('connection succesful'))
+  .then(() =>  console.log('db connection succesful'))
   .catch((err) => console.error(err));
+//middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use('/users', users);
 
-//routes
-app.get('/', (req,res)=>{
-	res.send("hello world");
-});
-
-// server spin up
 app.listen(port, ()=>{
-	console.log(`port up at ${port}`);
+	console.log(`server at ${port}`);
 });
-
