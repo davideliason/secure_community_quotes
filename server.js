@@ -33,7 +33,7 @@ app.post("/adduser", (req, res) => {
 
 app.get('/api/usersList',(req,res)=>{
   User.find({}, (err,users)=>{
-    console.log(users[0].email);
+   res.json(users);
   });
 });
 
