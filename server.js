@@ -1,42 +1,28 @@
-var express = require("express");
-var app = express();
-var port = process.env.PORT || 5000;
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var bodyParser = require('body-parser');
+const path = require('path');
+const logger = require('morgan');
+
+const app = express();
+const port = process.env.PORT || 5000;
+const uri = process.env.DB_MLAB;
+
+const mongo = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
+require('dotenv').config();
+
+
+// middleware
+app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-require('dotenv').config()
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-var mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_MLAB, { useNewUrlParser: true });
-var userSchema = new mongoose.Schema({
-    email: String,
-    password: String
-});
-var User = mongoose.model("User", userSchema);
-
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+//routes
+app.get('/', (req,res)=>{
+	console.log(process.env.TEST)
+	res.send('home route');
 });
 
-app.post("/adduser", (req, res) => {
-    var myData = new User(req.body);
-    myData.save()
-        .then(item => {
-            res.send("Name saved to database");
-        })
-        .catch(err => {
-            res.status(400).send("Unable to save to database");
-        });
-});
-
-app.get('/api/usersList',(req,res)=>{
-  User.find({}, (err,users)=>{
-   res.json(users);
-  });
-});
-
-app.listen(port, () => {
-    console.log("Server listening on port " + port);
-});
+app.listen(port);
