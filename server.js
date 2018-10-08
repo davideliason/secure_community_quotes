@@ -11,7 +11,9 @@ const port = process.env.PORT || 5000;
 const uri = process.env.DB_MLAB;
 var users = require('./routes/users');
 
-mongoose.connect('mongodb://localhost/user')
+// mongoose.connect('mongodb://localhost/user')
+mongoose.connect(uri)
+
   .then(() =>  console.log('db connection succesful'))
   .catch((err) => console.error(err));
 //middleware
