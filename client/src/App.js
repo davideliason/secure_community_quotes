@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import QuoteBox from './QuoteBox.js';
+import UserBox from './UserBox.js';
+
 
 class App extends Component {
  
@@ -6,10 +9,12 @@ class App extends Component {
     super(props);
 
     this.state = {
-    users: [] 
+      users: [],
+      quotes: []
     };
 
     this.getUsers = this.getUsers.bind(this);
+    // this.getQuotes = this.getQuotes.bind(this);
 
   }
 
@@ -19,18 +24,22 @@ class App extends Component {
       .then(users => this.setState({ users }));
   }
 
+  // getQuotes(){
+  //    fetch('/quotes/')
+  //     .then(res => res.json())
+  //     .then(quotes => this.setState({ quotes }));
+  // }
+
   componentDidMount() {
    this.getUsers();
+   // this.getQuotes();
   }
 
   render() {
     return (
       <div>
-
-         <h1>Users</h1>
-           {this.state.users.map(user =>
-               <div key={user._id}> {user.email} - {user.password}</div>
-           )}
+        <UserBox data={this.state.users} />
+        // <QuoteBox data={this.state.quotes} />
         </div>
       )}
 }
