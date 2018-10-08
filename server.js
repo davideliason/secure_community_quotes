@@ -32,12 +32,7 @@ MongoClient.connect(uri, (err, database) => {
 	 });
   });
 
-	app.get('/findUser/:email', (req,res) => {
-		db.collection('users').findOne({email : req.params.email}, function(err,result) {
-			if(err) throw err;
-			console.log(result.email);
-		});
-	});
+
 
 });
 app.listen(port);
