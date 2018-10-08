@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       users: [],
-      quotes: []
+      quotes: [{ "quote" : "hi", "author" : "me"}]
     };
 
     this.getUsers = this.getUsers.bind(this);
