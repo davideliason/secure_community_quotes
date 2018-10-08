@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+
 
 require('dotenv').config();
 mongoose.Promise = global.Promise;
@@ -15,7 +17,15 @@ mongoose.connect('mongodb://localhost/user')
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/users', users);
+app.get('*', (req, res) => {
+       res.sendFile(path.join(__dirname+'/client/build/index.html'));
+     });
+
+
+
 
 app.listen(port, ()=>{
 	console.log(`server at ${port}`);
