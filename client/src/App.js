@@ -22,13 +22,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-   this.getUsers();
+    this.getUsers();
   }
 
   render() {
     return (
       <div>
-        <UserBox data={this.state.users} />
+        <UserBox data={this.state.users} verb={this.getUsers} />
         </div>
       )}
 }

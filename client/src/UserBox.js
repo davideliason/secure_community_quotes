@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class UserBox extends Component {
+
+  componentDidMount() {
+    this.props.verb();
+  }
  
   render() {
     return (
