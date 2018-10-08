@@ -1,36 +1,28 @@
 import React, { Component } from 'react';
-import UserBox from './UserBox.js';
+import logo from './logo.svg';
+import './App.css';
 
 class App extends Component {
- 
-   constructor(props) {
-    super(props);
-
-    this.state = {
-      users: [],
-      quotes: []
-    };
-
-    this.getUsers = this.getUsers.bind(this);
-
-  }
-
-  getUsers(){
-     fetch('/users/')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
-
-  componentDidMount() {
-    this.getUsers();
-  }
-
   render() {
     return (
-      <div>
-        <UserBox data={this.state.users} verb={this.getUsers} />
-        </div>
-      )}
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;

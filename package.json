@@ -1,19 +1,14 @@
 {
   "name": "secure_community_quotes",
   "version": "0.1.0",
-  "description": "mern",
+  "description": "mern comments",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davideliason/secure_community_quotes.git"
-  },
-   "engines": {
-    "node": "8.11.4"
   },
   "keywords": [
     "mern"
@@ -25,12 +20,7 @@
   },
   "homepage": "https://github.com/davideliason/secure_community_quotes#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "mongoose": "^5.3.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.4"
+    "express": "^4.16.3"
   }
 }
