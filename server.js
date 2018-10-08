@@ -9,7 +9,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 const uri = process.env.DB_MLAB;
 
-const mongoose = require('mongoose');
 const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 
@@ -32,6 +31,13 @@ MongoClient.connect(uri, (err, database) => {
 	 	res.json(users);
 	 });
   });
+
+	app.get('/findUser/:email', (req,res) => {
+		db.collection('users').findOne({email : req.params.email}, function(err,result) {
+			if(err) throw err;
+			console.log(result.email);
+		});
+	});
 
 });
 app.listen(port);
