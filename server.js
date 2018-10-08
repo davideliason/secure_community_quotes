@@ -17,12 +17,19 @@ require('dotenv').config();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'index.html')));
+
 
 //routes
-app.get('/', (req,res)=>{
-	console.log(process.env.TEST)
-	res.send('home route');
+app.get('/users', function(req, res, next) {
+  res.json([{
+  	id: 1,
+  	username: "user1"
+  }, {
+  	id: 2,
+  	username: "user2"
+  }]);
 });
 
 app.listen(port);
