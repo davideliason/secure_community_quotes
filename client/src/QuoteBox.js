@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import QuoteList from './QuoteList';
-import QuoteForm from './QuoteForm';
 import DATA from './data';
 import './QuoteBox.css';
 
@@ -23,7 +22,6 @@ class QuoteBox extends Component {
              </div>
 
              <div className="form">
-             	<QuoteForm />
              </div>
       </div>
     );
