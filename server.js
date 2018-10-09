@@ -35,6 +35,25 @@ router.get('/quotes', (req, res) => {
   });
 });
 
+router.post('/quotes', (req, res) => {
+  const quote = new Quote();
+  // body parser lets us use the req.body
+  const { author, text } = req.body;
+  if (!author || !text) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide an author and comment'
+    });
+  }
+  quote.author = author;
+  quote.text = text;
+  quote.save(err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
 app.use('/api', router);
 
 app.listen(port, ()=>{
