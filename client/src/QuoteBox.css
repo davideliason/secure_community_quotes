@@ -26,3 +26,39 @@
   margin-bottom: 10px;
   display: flex;
 }
+
+.form {
+  width: 70%;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.form form {
+  display: flex;
+  padding: 15px 0;
+}
+
+.form input {
+  height: 30px;
+  padding-left: 10px;
+  border: 1px solid #c1c1c1;
+  margin-right: 10px;
+  border-radius: 20px;
+  flex: 3;
+}
+
+.form input:first-child {
+  flex: 1;
+}
+
+.form button {
+  background-color: #4dc65d;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+.form button:hover {
+  cursor: pointer;
+  background-color: #f4df42;
+  border-color: #385997;
+}
