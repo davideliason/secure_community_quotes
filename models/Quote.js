@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var QuoteSchema = new mongoose.Schema({
   author: String,
-  quote: String,
+  text: String,
   updated_at: { type: Date, default: Date.now },
 });
 
