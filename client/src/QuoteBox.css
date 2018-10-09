@@ -16,3 +16,13 @@
   max-width: 700px;
   min-width: 300px;
 }
+
+.quotes h3 {
+	font=font-weight: 250;
+}
+
+.singleQuote {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  display: flex;
+}
