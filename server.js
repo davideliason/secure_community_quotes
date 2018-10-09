@@ -6,10 +6,20 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 const app = express();
-const port = process.env.PORT || 5000;
-app.get('/', (req,res)=>{
-	res.send('hello home route');
+const router = express.Router();
+const port = process.env.PORT || 3001;
+
+//middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
+
+//routes
+router.get('/', (req,res)=>{
+	res.json({ message: 'Hello, World!' });
 });
+
+app.use('/api', router);
 
 app.listen(port, ()=>{
 	console.log(`server at ${port}`);
