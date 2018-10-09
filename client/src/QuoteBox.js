@@ -6,12 +6,16 @@ import QuoteForm from './QuoteForm';
 
 class QuoteBox extends Component {
 
-	constructor(){
-		super();
-		this.state={
-			data : []
-		};
-	}
+	 constructor() {
+    super();
+    this.state = {
+      data: [],
+      error: null,
+      author: '',
+      text: ''
+    };
+    this.pollInterval = null;
+  }
 	
   render() {
     return (
