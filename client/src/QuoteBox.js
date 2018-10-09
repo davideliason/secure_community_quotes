@@ -6,24 +6,37 @@ import QuoteForm from './QuoteForm';
 
 class QuoteBox extends Component {
 
-	 constructor() {
-    super();
+	 constructor(props) {
+    super(props);
     this.state = {
       data: [],
       error: null,
       author: '',
       text: ''
     };
-    this.pollInterval = null;
   }
-	
+
+  // componentDidMount() {
+  //   this.loadQuotesFromServer();
+
+  //   if (!this.pollInterval) {
+  //     this.pollInterval = setInterval(this.loadQuotesFromServer, 2000);
+  //   }
+  // }
+
+  componentDidMount() {
+    fetch('/api/quotes')
+      .then(res => res.json())
+      .then(quotes => this.setState({ data : quotes }));
+  }
+  
   render() {
     return (
       <div className="container">
           <h2>Community Quotes</h2>
              <div className="quotes">
                 <h3>Quotes:</h3>
-                <QuoteList data={DATA} />
+                <QuoteList data={this.state.data} />
              </div>
 
              <div className="form">
