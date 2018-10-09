@@ -17,6 +17,9 @@ app.use(logger('dev'));
 
 //db
 mongoose.connect(uri, { useNewUrlParser: true });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+console.log('server connected to db');
 
 //routes
 router.get('/', (req,res)=>{
@@ -26,5 +29,5 @@ router.get('/', (req,res)=>{
 app.use('/api', router);
 
 app.listen(port, ()=>{
-	console.log(`server at ${port}`);
+	console.log(`server at port ${port}`);
 });
