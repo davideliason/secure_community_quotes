@@ -1,0 +1,32 @@
+{
+  "name": "secure_community_quotes",
+  "version": "0.1.0",
+  "description": "mern for quotes",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "8.11.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davideliason/secure_community_quotes.git"
+  },
+  "keywords": [
+    "mern"
+  ],
+  "author": "David Eliason",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davideliason/secure_community_quotes/issues"
+  },
+  "homepage": "https://github.com/davideliason/secure_community_quotes#readme",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.3.2",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  }
+}
