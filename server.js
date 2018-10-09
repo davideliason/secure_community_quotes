@@ -8,11 +8,15 @@ require('dotenv').config();
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3001;
+const uri = process.env.DB_MLAB;
 
 //middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+
+//db
+mongoose.connect(uri, { useNewUrlParser: true });
 
 //routes
 router.get('/', (req,res)=>{
