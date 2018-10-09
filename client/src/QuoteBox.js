@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-import './App.css';
-import CommentList from './CommentList';
-import CommentForm from './CommentForm';
+import QuoteList from './QuoteList';
+import QuoteForm from './QuoteForm';
 import DATA from './data';
-import './CommentBox.css';
+import './QuoteBox.css';
 
-class CommentBox extends Component {
+class QuoteBox extends Component {
+
+	constructor(){
+		super();
+		this.state={
+			data : []
+		};
+	}
+	
   render() {
     return (
-      <div className="App">
-          <h3>Community Quotes</h3>
+      <div className="container">
+          <h2>Community Quotes</h2>
+             <div className="quotes">
+                <h3>Quotes:</h3>
+                <QuoteList data={DATA} />
+             </div>
+
+             <div className="form">
+             	<QuoteForm />
+             </div>
       </div>
     );
   }
 }
 
-export default CommentBox;
+export default QuoteBox;
