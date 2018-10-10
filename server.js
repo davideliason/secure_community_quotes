@@ -1,29 +1,21 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const path	= require('path');
 const logger = require('morgan');
-const path = require('path');
-const mongoose = require('mongoose');
-
 
 require('dotenv').config();
-
-const app = express();
 const port = process.env.PORT || 3001;
-const router = express.Router();
+const app = express();
 
-//middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-
-app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname+'/client/build/index.html'));
- });
-
-
-app.listen(port, () => {
-	console.log(`server listening at port ${port}`);
+app.get('/',(req,res,next)=>{
+	console.log(process.env.TEST);
+	res.type('text/plain');
+	res.write('hello world');
+	res.end();
 });
+
+app.listen(port,()=>{
+	console.log(`server at port ${port}`);
+});
+
+
 
