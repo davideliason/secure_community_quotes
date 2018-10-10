@@ -10,13 +10,8 @@ const app = express();
 
 // MIDDLEWARE
 app.use(morgan('dev'));
-
-app.get('/',(req,res,next)=>{
-	console.log(process.env.TEST + uuid());
-	res.type('text/plain');
-	res.write('hello world');
-	res.end();
-});
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/api/quotes',(req,res,next)=>{
 	 res.json([{
@@ -28,6 +23,10 @@ app.get('/api/quotes',(req,res,next)=>{
   		author: "John",
   		text:"coffee too"
   }]);
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 app.listen(port,()=>{
