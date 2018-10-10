@@ -20,11 +20,11 @@ class QuoteBox extends Component {
 
   
 
-  // componentDidMount() {
-  //   fetch('/api/quotes')
-  //     .then(res => res.json())
-  //     .then(quotes => this.setState({ quotes }));
-  // }
+  componentDidMount() {
+    fetch('/api/quotes')
+      .then(res => res.json())
+      .then(quotes => this.setState({ quotes }));
+  }
 
   render(){
     return(
