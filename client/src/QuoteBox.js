@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
 import './QuoteBox.css';
+import QuoteList from './QuoteList.js';
+
+
 
 class QuoteBox extends Component {
-  state = {quotes: []}
-
-  componentDidMount() {
-    fetch('/api/quotes')
-      .then(res => res.json())
-      .then(quotes => this.setState({ quotes }));
+  constructor(){
+    super();
+    this.state = {
+      quotes : [
+        {id: 5, "author" : "me", "text" : "ok"},
+        {id: 6, "author" : "you", "text" : "alrighty"}
+      ],
+      error: null,
+      author: '',
+      text: ''
+    };
   }
 
-  render() {
-    return (
-      <div className="QuoteBox">
-        <h1>Quotes</h1>
-        {this.state.quotes.map(quote =>
-          <div key={quote.id}>{quote.author} : {quote.text}</div>
-        )}
-      </div>
-    );
+  
+
+  // componentDidMount() {
+  //   fetch('/api/quotes')
+  //     .then(res => res.json())
+  //     .then(quotes => this.setState({ quotes }));
+  // }
+
+  render(){
+    return(
+        <div className="container">
+          <div className="quotes">
+            <h3>Quotes</h3>
+            <QuoteList quotes={this.state.quotes} />
+          </div>
+        </div>
+      );
   }
 }
 
