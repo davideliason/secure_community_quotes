@@ -18,6 +18,18 @@ app.get('/',(req,res,next)=>{
 	res.end();
 });
 
+app.get('/api/quotes',(req,res,next)=>{
+	 res.json([{
+  		id: uuid(),
+  		author: "David",
+  		text: "coffee"
+  		}, {
+  		id: uuid(),
+  		author: "John",
+  		text:"coffee too"
+  }]);
+});
+
 app.listen(port,()=>{
 	console.log(`server at port ${port}`);
 });
