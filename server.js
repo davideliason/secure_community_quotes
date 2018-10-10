@@ -6,10 +6,12 @@ const uuid = require('uuid');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+
 require('dotenv').config();
 const port = process.env.PORT || 3001;
 const uri = process.env.DB_MLAB;
 const app = express();
+const Quote = require('./models/quote.js');
 
 // MIDDLEWARE
 app.use(morgan('dev'));
