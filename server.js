@@ -12,12 +12,16 @@ const port = process.env.PORT || 3001;
 const router = express.Router();
 
 //middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.get('/', (req,res)=>{
-	res.send('hello');
+app.get('/', (req,res,next)=>{
+	res.write('hello')
+	next();
+});
+app.get('/', (req,res,next) =>{
+	res.status(200).end('world');
 });
 
 
