@@ -15,14 +15,12 @@ const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/', (req,res,next)=>{
-	res.write('hello')
-	next();
-});
-app.get('/', (req,res,next) =>{
-	res.status(200).end('world');
-});
+
+app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname+'/client/build/index.html'));
+ });
 
 
 app.listen(port, () => {
