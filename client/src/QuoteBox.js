@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import './QuoteBox.css';
 
-class App extends Component {
+class QuoteBox extends Component {
   state = {quotes: []}
 
   componentDidMount() {
@@ -12,7 +12,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="QuoteBox">
         <h1>Quotes</h1>
         {this.state.quotes.map(quote =>
           <div key={quote.id}>{quote.author} : {quote.text}</div>
@@ -22,4 +22,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default QuoteBox;
