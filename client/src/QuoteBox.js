@@ -8,10 +8,7 @@ class QuoteBox extends Component {
   constructor(){
     super();
     this.state = {
-      quotes : [
-        {id: 5, "author" : "me", "text" : "ok"},
-        {id: 6, "author" : "you", "text" : "alrighty"}
-      ],
+      quotes : [],
       error: null,
       author: '',
       text: ''

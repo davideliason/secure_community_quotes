@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/api/quotes',(req,res,next)=>{
+app.get('/api/quotes',(req,res,next)=> {
 	 res.json([{
   		id: uuid(),
   		author: "David",
@@ -29,7 +29,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-app.listen(port,()=>{
+app.listen(port,()=> {
 	console.log(`server at port ${port}`);
 });
 
