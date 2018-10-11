@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 const port = process.env.PORT || 3001;
-const uri = process.env.DB_MLAB;
+const uri = process.env.MLAB;
 const app = express();
 const Quote = require('./models/quote.js');
 
