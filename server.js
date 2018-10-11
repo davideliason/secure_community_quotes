@@ -31,6 +31,23 @@ app.get('/api/quotes',(req,res,next)=> {
    });
 });
 
+app.post('/api/quotes',(req,res) => {
+  const quote = new Quote();
+  const { author, text } = req.body;
+  if ( !author || !text) {
+    return res.json({
+      success: false,
+      error: 'You must provide an author and text'
+    });
+  }
+  quote.author = author;
+  quote.text = text;
+  quote.save(err => {
+    if(err) return res.json({success:false, error: err});
+    return res.json({success: true});
+  });
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });

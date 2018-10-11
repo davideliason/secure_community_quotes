@@ -28,7 +28,6 @@ class QuoteBox extends Component {
         <div className="container">
           <div className="quotes">
             <h3>Quotes</h3>
-            {this.state.quotes.length}
             <QuoteList quotes={this.state.quotes} />
           </div>
         </div>
