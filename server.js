@@ -26,15 +26,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 console.log('db connection established');
 
 app.get('/api/quotes',(req,res,next)=> {
-	 res.json([{
-  		id: uuid(),
-  		author: "David",
-  		text: "coffee"
-  		}, {
-  		id: uuid(),
-  		author: "John",
-  		text:"coffee too"
-  }]);
+	 Quote.find({},(err,quotes)=>{
+    res.json(quotes)
+   });
 });
 
 app.get('*', (req, res) => {
