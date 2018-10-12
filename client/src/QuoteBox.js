@@ -28,9 +28,9 @@ class QuoteBox extends Component {
 
   onDeleteQuote = (id) => {
     const i = this.state.quotes.findIndex(c => c._id === id);
-    const data = [
-      ...this.state.data.slice(0, i),
-      ...this.state.data.slice(i + 1),
+    const quotes = [
+      ...this.state.quotes.slice(0, i),
+      ...this.state.quotes.slice(i + 1),
     ];
     this.setState({ quotes });
     fetch(`api/quotes/${id}`, { method: 'DELETE' })
