@@ -16,7 +16,7 @@ const Quote = require('./models/quote.js');
 // MIDDLEWARE
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
@@ -48,12 +48,12 @@ app.post('/api/quotes',(req,res) => {
   });
 });
 
-app.put('/api/quotes/:quoteId', (req, res) => {
-  var quoteId = req.params.quoteId;
-  console.log(quoteId);
+app.put('/api/quotes/:dbid', (req, res) => {
+  console.log(req.params);
+  var dbid = req.params.dbid;
+  console.log(dbid);
   console.log("previous content" + req.body);
 
-  var dbid = "5bbfd6942c5b10001575675c";
 
   Quote.findById(dbid, (error, quote) => {
     if (error) return res.json({ success: false, error });
