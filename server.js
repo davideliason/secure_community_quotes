@@ -48,6 +48,11 @@ app.post('/api/quotes',(req,res) => {
   });
 });
 
+app.delete('/api/quotes/:quoteId', (req,res) => {
+  var quoteId = req.params.quoteId;
+  console.log(quoteId);
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
