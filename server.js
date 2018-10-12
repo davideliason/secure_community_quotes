@@ -70,6 +70,7 @@ app.put('/api/quotes/:dbid', (req, res) => {
 
 });
 
+// DELETE
 app.delete('/api/quotes/:quoteId', (req,res) => {
   var quoteId = req.params.quoteId;
   console.log(quoteId);
