@@ -16,6 +16,29 @@ class QuoteBox extends Component {
     };
   }
 
+  onUpdateQuote = (id) => {
+    const oldQuote = this.state.quotes.find(c => c._id === id);
+    if (!oldQuote) return;
+    this.setState({
+        author: oldQuote.author,
+        text: oldQuote.text,
+        updateId: id
+    });
+  }
+
+  onDeleteQuote = (id) => {
+    const i = this.state.quotes.findIndex(c => c._id === id);
+    const data = [
+      ...this.state.data.slice(0, i),
+      ...this.state.data.slice(i + 1),
+    ];
+    this.setState({ quotes });
+    fetch(`api/quotes/${id}`, { method: 'DELETE' })
+      .then(res => res.json()).then((res) => {
+        if (!res.success) this.setState({ error: res.error });
+      });
+  }
+
   onChangeText = (e) => {
     const newState = { ...this.state };
     newState[e.target.name] = e.target.value;
