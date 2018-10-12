@@ -78,7 +78,11 @@ class QuoteBox extends Component {
           <div className="quotes">
             <h3>Quotes</h3>
            author: {this.state.author} text : {this.state.text}
-            <QuoteList quotes={this.state.quotes} />
+            <QuoteList 
+                quotes={this.state.quotes}
+                handleUpdateQuote = {this.onUpdateQuote}
+                handleDeleteQuote = {this.onDeleteQuote}
+            />
             <QuoteForm author={this.state.author}
                        text={this.state.text}
                        handleTextChange={this.onChangeAuthorText}
