@@ -40,6 +40,20 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 console.log('db connection established');
 
+
+app.get('/login', (req, res) => {
+  console.log('Inside GET /login callback function')
+  console.log(req.sessionID)
+  res.send(`You got the login page!\n`)
+})
+
+app.post('/login', (req, res) => {
+  console.log('Inside POST /login callback function')
+  console.log(req.body)
+  res.send(`You posted to the login page!\n`)
+})
+
+
 app.get('/api/quotes',(req,res,next)=> {
   console.log(req.sessionID);
 	 Quote.find({},(err,quotes)=>{
