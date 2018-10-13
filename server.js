@@ -13,6 +13,7 @@ const port = process.env.PORT || 3001;
 const uri = process.env.MLAB;
 const app = express();
 const Quote = require('./models/quote.js');
+const FileStore = require('session-file-store')(session);
 
 // MIDDLEWARE
 // Serve static files from the React app
@@ -39,6 +40,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 console.log('db connection established');
 
 app.get('/api/quotes',(req,res,next)=> {
+  console.log(req.sessionID);
 	 Quote.find({},(err,quotes)=>{
     res.json(quotes)
    });
