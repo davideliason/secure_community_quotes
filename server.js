@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const uuid = require('uuid');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 
 require('dotenv').config();
@@ -19,6 +20,18 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware')
+    console.log(req.sessionID)
+    return uuid() // use UUIDs for session IDs
+  },
+  secret: 'keyboard coffee',
+  resave: false,
+  saveUninitialized: true
+}))
+
 
 mongoose.connect(uri,{ useNewUrlParser: true });
 var db = mongoose.connection;
