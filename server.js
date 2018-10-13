@@ -28,6 +28,7 @@ app.use(session({
     console.log(req.sessionID)
     return uuid() // use UUIDs for session IDs
   },
+  store: new FileStore(),
   secret: 'keyboard coffee',
   resave: false,
   saveUninitialized: true
