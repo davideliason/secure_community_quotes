@@ -25,6 +25,30 @@ const users = [
 ];
 
 // MIDDLEWARE
+passport.use(new LocalStrategy(
+  { usernameField: 'email' },
+  (email, password, done) => {
+    console.log('Inside local strategy callback')
+    // next step: DB call to find user based on userman or email
+    // right now just using the above hard-coded users values
+    // DB.findById() 
+    // email and password are what was sent to server via POST request
+    // if that data (email, password) matches the data in the DB..
+    // then we call the done(error object, user object) method and ..
+    // pass in null and the user object returned from the DB
+    const user = users[0] 
+    if(email === user.email && password === user.password) {
+      console.log('Local strategy returned true')
+      return done(null, user)
+    }
+  }
+));
+
+passport.serializeUser((user, done) => {
+  console.log('Inside serializeUser callback. User id is save to the session file store here')
+  done(null, user.id);
+});
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,6 +67,9 @@ app.use(session({
   saveUninitialized: true
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 mongoose.connect(uri,{ useNewUrlParser: true });
 var db = mongoose.connection;
@@ -56,10 +83,19 @@ app.get('/login', (req, res) => {
   res.send(`You got the login page!\n`)
 })
 
-app.post('/login', (req, res) => {
-  console.log('Inside POST /login callback function')
-  console.log(req.body)
-  res.send(`You posted to the login page!\n`)
+app.post('/login', (req, res, next) => {
+  console.log('Inside POST /login callback')
+  passport.authenticate('local', (err, user, info) => {
+    console.log('Inside passport.authenticate() callback');
+    console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+    console.log(`req.user: ${JSON.stringify(req.user)}`)
+    req.login(user, (err) => {
+      console.log('Inside req.login() callback')
+      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+      console.log(`req.user: ${JSON.stringify(req.user)}`)
+      return res.send('You were authenticated & logged in!\n');
+    })
+  })(req, res, next);
 })
 
 
