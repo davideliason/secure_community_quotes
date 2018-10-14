@@ -6,6 +6,8 @@ const uuid = require('uuid');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 
 require('dotenv').config();
@@ -14,6 +16,13 @@ const uri = process.env.MLAB;
 const app = express();
 const Quote = require('./models/quote.js');
 const FileStore = require('session-file-store')(session);
+
+const users = [
+  { id: '25x19', 
+    email: 'test@test.com',
+    password: 'xyz'
+  }
+];
 
 // MIDDLEWARE
 // Serve static files from the React app
