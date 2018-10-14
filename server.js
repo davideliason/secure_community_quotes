@@ -49,6 +49,13 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+passport.deserializeUser((id, done) => {
+  console.log('Inside deserializeUser callback')
+  console.log(`The user id passport saved in the session file store is: ${id}`)
+  const user = users[0].id === id ? users[0] : false; 
+  done(null, user);
+});
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -81,6 +88,16 @@ app.get('/login', (req, res) => {
   console.log('Inside GET /login callback function')
   console.log(req.sessionID)
   res.send(`You got the login page!\n`)
+})
+
+app.get('/authrequired', (req, res) => {
+  console.log('Inside GET /authrequired callback')
+  console.log(`User authenticated? ${req.isAuthenticated()}`)
+  if(req.isAuthenticated()) {
+    res.send('you hit the authentication endpoint\n')
+  } else {
+    res.redirect('/')
+  }
 })
 
 app.post('/login', (req, res, next) => {
