@@ -4,16 +4,16 @@ class Signup extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        email: '',
+        username: '',
         password: ''
       };
   
-      this.handleEmailChange = this.handleEmailChange.bind(this);
+      this.handleUsernameChange = this.handleUsernameChange.bind(this);
       this.handlePasswordChange = this.handlePasswordChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
   
-    handleEmailChange(event) {
+    handleUsernameChange(event) {
       this.setState({email: event.target.value});
     }
 
@@ -30,8 +30,8 @@ class Signup extends React.Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            Email:
-            <textarea value={this.state.value} onChange={this.handleEmailChange} />
+            Username:
+            <textarea value={this.state.value} onChange={this.handleUsernameChange} />
           </label>
           <label>
             Password:
