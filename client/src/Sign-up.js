@@ -22,7 +22,7 @@ class Signup extends React.Component {
       }
   
     handleSubmit(event) {
-      alert('An essay was submitted: ' + this.state.value);
+      alert('An essay was submitted: ' + this.state.email + " " + this.state.password);
       event.preventDefault();
     }
   
