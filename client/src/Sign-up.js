@@ -14,7 +14,7 @@ class Signup extends React.Component {
     }
   
     handleUsernameChange(event) {
-      this.setState({email: event.target.value});
+      this.setState({username: event.target.value});
     }
 
     handlePasswordChange(event) {
@@ -22,22 +22,17 @@ class Signup extends React.Component {
       }
   
     handleSubmit(event) {
-      alert('An essay was submitted: ' + this.state.email + " " + this.state.password);
+      alert('An essay was submitted: ' + this.state.username + " " + this.state.password);
       event.preventDefault();
     }
   
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-            <textarea value={this.state.value} onChange={this.handleUsernameChange} />
-          </label>
-          <label>
-            Password:
-            <textarea value={this.state.value} onChange={this.handlePasswordChange} />
-          </label>
-          <input type="submit" value="Submit" />
+         
+            <input type="text" name="username" value={this.state.username} onChange={this.handleUsernameChange} />
+            <input type="text" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+            <input type="submit" value="Submit" />
         </form>
       );
     }
