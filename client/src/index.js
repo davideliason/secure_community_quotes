@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import QuoteBox from './QuoteBox.js';
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.render(<QuoteBox />, document.getElementById('root'));
+ReactDOM.render(
+    <BrowserRouter>
+         <QuoteBox />
+    </BrowserRouter>,document.getElementById('root'));
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './QuoteBox.css';
 import QuoteList from './QuoteList.js';
 import QuoteForm from './QuoteForm.js';
-
+import { Route, Link } from 'react-router-dom';
+import Signup from './Sign-up.js';
 
 
 class QuoteBox extends Component {
@@ -75,6 +76,7 @@ class QuoteBox extends Component {
   render(){
     return(
         <div className="container">
+          <Signup />
           <div className="quotes">
             <h3>Quotes</h3>
            author: {this.state.author} text : {this.state.text}

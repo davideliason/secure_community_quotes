@@ -107,10 +107,8 @@ app.post('/login', (req, res, next) => {
     console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
     console.log(`req.user: ${JSON.stringify(req.user)}`)
     req.login(user, (err) => {
-      console.log('Inside req.login() callback')
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-      console.log(`req.user: ${JSON.stringify(req.user)}`)
-      return res.send('You were authenticated & logged in!\n');
+      if (err) { return next(err); }
+      return res.redirect('/authrequired');
     })
   })(req, res, next);
 })
