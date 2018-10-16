@@ -20,25 +20,25 @@ const FileStore = require('session-file-store')(session);
 
 const users = [
   { id: '25x19', 
-    email: 'test@test.com',
+    username: 'test@test.com',
     password: 'xyz'
   }
 ];
 
 // MIDDLEWARE
 passport.use(new LocalStrategy(
-  { usernameField: 'email' },
-  (email, password, done) => {
+  { usernameField: 'username' },
+  (username, password, done) => {
     console.log('Inside local strategy callback')
     // next step: DB call to find user based on userman or email
     // right now just using the above hard-coded users values
     // DB.findById() 
-    // email and password are what was sent to server via POST request
-    // if that data (email, password) matches the data in the DB..
+    // username and password are what was sent to server via POST request
+    // if that data (username, password) matches the data in the DB..
     // then we call the done(error object, user object) method and ..
     // pass in null and the user object returned from the DB
     const user = users[0] 
-    if(email === user.email && password === user.password) {
+    if(username === user.username && password === user.password) {
       console.log('Local strategy returned true')
       return done(null, user)
     }
