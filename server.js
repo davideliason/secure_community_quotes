@@ -18,17 +18,19 @@ const Quote = require('./models/quote.js');
 const User = require('./models/user.js');
 const FileStore = require('session-file-store')(session);
 
-const users = [
-  { id: '25x19', 
-    username: 'test@test.com',
-    password: 'xyz'
-  }
-];
+// const users = [
+//   { id: '25x19', 
+//     username: 'test@test.com',
+//     password: 'xyz'
+//   }
+// ];
 
 // MIDDLEWARE
 passport.use(new LocalStrategy(
-  { usernameField: 'username' },
-  (username, password, done) => {
+  {
+    usernameField: 'username'
+  },  
+  function(username, password, done){
     console.log('Inside local strategy callback')
     // next step: DB call to find user based on userman or email
     // right now just using the above hard-coded users values
@@ -37,11 +39,21 @@ passport.use(new LocalStrategy(
     // if that data (username, password) matches the data in the DB..
     // then we call the done(error object, user object) method and ..
     // pass in null and the user object returned from the DB
-    const user = users[0] 
-    if(username === user.username && password === user.password) {
-      console.log('Local strategy returned true')
+
+    // const user = users[0] 
+    // if(username === user.username && password === user.password) {
+    //   console.log('Local strategy returned true')
+    //   return done(null, user)
+    // }
+    User.findOne({ username: username }, (err, user) => {
+      console.log("db queried!");
+      if(err) { return done(err)}
+      if(!user) { return done(null,false, { message : 'Incorrect username'})}
+      if(!user.checkPassword(password)) {
+        return done(null,false, {message : 'Incorrect password'})
+      }
       return done(null, user)
-    }
+    })
   }
 ));
 
@@ -121,6 +133,7 @@ app.post('/addUser', (req,res) => {
 });
 
 app.post('/loginUser', (req,res) => {
+  console.log("route for /loginUser")
   console.log(req.body);
  
   passport.authenticate('local'),

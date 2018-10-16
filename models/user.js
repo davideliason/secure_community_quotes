@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
-// create new instance of the mongoose.schema. the schema takes an
-// object that shows the shape of your database entries.
 const UserSchema = new Schema({
   username: String,
   password: String
