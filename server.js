@@ -15,6 +15,7 @@ const port = process.env.PORT || 3001;
 const uri = process.env.MLAB;
 const app = express();
 const Quote = require('./models/quote.js');
+const User = require('./models/user.js');
 const FileStore = require('session-file-store')(session);
 
 const users = [
@@ -25,36 +26,36 @@ const users = [
 ];
 
 // MIDDLEWARE
-passport.use(new LocalStrategy(
-  { usernameField: 'email' },
-  (email, password, done) => {
-    console.log('Inside local strategy callback')
-    // next step: DB call to find user based on userman or email
-    // right now just using the above hard-coded users values
-    // DB.findById() 
-    // email and password are what was sent to server via POST request
-    // if that data (email, password) matches the data in the DB..
-    // then we call the done(error object, user object) method and ..
-    // pass in null and the user object returned from the DB
-    const user = users[0] 
-    if(email === user.email && password === user.password) {
-      console.log('Local strategy returned true')
-      return done(null, user)
-    }
-  }
-));
+// passport.use(new LocalStrategy(
+//   { usernameField: 'email' },
+//   (email, password, done) => {
+//     console.log('Inside local strategy callback')
+//     // next step: DB call to find user based on userman or email
+//     // right now just using the above hard-coded users values
+//     // DB.findById() 
+//     // email and password are what was sent to server via POST request
+//     // if that data (email, password) matches the data in the DB..
+//     // then we call the done(error object, user object) method and ..
+//     // pass in null and the user object returned from the DB
+//     const user = users[0] 
+//     if(email === user.email && password === user.password) {
+//       console.log('Local strategy returned true')
+//       return done(null, user)
+//     }
+//   }
+// ));
 
-passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here')
-  done(null, user.id);
-});
+// passport.serializeUser((user, done) => {
+//   console.log('Inside serializeUser callback. User id is save to the session file store here')
+//   done(null, user.id);
+// });
 
-passport.deserializeUser((id, done) => {
-  console.log('Inside deserializeUser callback')
-  console.log(`The user id passport saved in the session file store is: ${id}`)
-  const user = users[0].id === id ? users[0] : false; 
-  done(null, user);
-});
+// passport.deserializeUser((id, done) => {
+//   console.log('Inside deserializeUser callback')
+//   console.log(`The user id passport saved in the session file store is: ${id}`)
+//   const user = users[0].id === id ? users[0] : false; 
+//   done(null, user);
+// });
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -68,15 +69,17 @@ app.use(session({
     console.log(req.sessionID)
     return uuid() // use UUIDs for session IDs
   },
-  store: new FileStore(),
   secret: 'keyboard coffee',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }))
 
-app.use(passport.initialize());
-app.use(passport.session());
-
+// app.use(passport.initialize());
+// app.use(passport.session());
+app.use( (req, res, next) => {
+  console.log('req.session', req.session);
+  return next();
+});
 
 mongoose.connect(uri,{ useNewUrlParser: true });
 var db = mongoose.connection;
@@ -85,6 +88,15 @@ console.log('db connection established');
 
 app.post('/addUser', (req,res) => {
   console.log(req.body);
+  var newUser = new User ({
+        "username" : req.body.username,
+        "password" : req.body.password
+  });
+    
+  newUser.save(function (err, newUser) {
+    if(err) return console.error(er);
+    console.log("new user saved to db");
+  });
 });
 
 app.get('/login', (req, res) => {
