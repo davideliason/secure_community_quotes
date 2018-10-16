@@ -26,36 +26,44 @@ const users = [
 ];
 
 // MIDDLEWARE
-// passport.use(new LocalStrategy(
-//   { usernameField: 'email' },
-//   (email, password, done) => {
-//     console.log('Inside local strategy callback')
-//     // next step: DB call to find user based on userman or email
-//     // right now just using the above hard-coded users values
-//     // DB.findById() 
-//     // email and password are what was sent to server via POST request
-//     // if that data (email, password) matches the data in the DB..
-//     // then we call the done(error object, user object) method and ..
-//     // pass in null and the user object returned from the DB
-//     const user = users[0] 
-//     if(email === user.email && password === user.password) {
-//       console.log('Local strategy returned true')
-//       return done(null, user)
-//     }
-//   }
-// ));
+passport.use(new LocalStrategy(
+  { usernameField: 'email' },
+  (email, password, done) => {
+    console.log('Inside local strategy callback')
+    // next step: DB call to find user based on userman or email
+    // right now just using the above hard-coded users values
+    // DB.findById() 
+    // email and password are what was sent to server via POST request
+    // if that data (email, password) matches the data in the DB..
+    // then we call the done(error object, user object) method and ..
+    // pass in null and the user object returned from the DB
+    const user = users[0] 
+    if(email === user.email && password === user.password) {
+      console.log('Local strategy returned true')
+      return done(null, user)
+    }
+  }
+));
 
-// passport.serializeUser((user, done) => {
-//   console.log('Inside serializeUser callback. User id is save to the session file store here')
-//   done(null, user.id);
-// });
+/*
+serializeUser stores the user id to req.session.passport.user = {id:’..’}.
+*/
 
-// passport.deserializeUser((id, done) => {
-//   console.log('Inside deserializeUser callback')
-//   console.log(`The user id passport saved in the session file store is: ${id}`)
-//   const user = users[0].id === id ? users[0] : false; 
-//   done(null, user);
-// });
+passport.serializeUser((user, done) => {
+  console.log('Inside serializeUser callback. User id is save to the session file store here')
+  done(null, user.id);
+});
+
+/*
+deserializeUser will check to see if this user is saved in the database,
+ and if it is found it assigns it to the request as req.user = {user object}.
+*/
+passport.deserializeUser((id, done) => {
+  console.log('Inside deserializeUser callback')
+  console.log(`The user id passport saved in the session file store is: ${id}`)
+  const user = users[0].id === id ? users[0] : false; 
+  done(null, user);
+});
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -74,8 +82,9 @@ app.use(session({
   saveUninitialized: false
 }))
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session()); // calls serializeUser and deserializeUser
+
 app.use( (req, res, next) => {
   console.log('req.session', req.session);
   return next();
