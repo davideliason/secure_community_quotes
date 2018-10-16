@@ -83,6 +83,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 console.log('db connection established');
 
+app.post('/addUser', (req,res) => {
+  console.log(req.body);
+});
 
 app.get('/login', (req, res) => {
   console.log('Inside GET /login callback function')

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 class Signup extends React.Component {
     constructor(props) {
@@ -22,16 +23,23 @@ class Signup extends React.Component {
       }
   
     handleSubmit(event) {
-      alert('An essay was submitted: ' + this.state.username + " " + this.state.password);
       event.preventDefault();
+      console.log('An essay was submitted: ' + this.state.username + " " + this.state.password);
+      axios.post('/addUser', {
+        username : this.state.username,
+        password : this.state.password
+      })
+        .then(response => {
+          console.log(response);
+        })
     }
   
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-         
-            <input type="text" name="username" value={this.state.username} onChange={this.handleUsernameChange} />
-            <input type="text" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+           <label>Signup</label>
+            <input type="text" name="username" value={this.state.username} placeholder="username/email" onChange={this.handleUsernameChange} />
+            <input type="text" name="password" value={this.state.password} placeholder="password" onChange={this.handlePasswordChange} />
             <input type="submit" value="Submit" />
         </form>
       );
