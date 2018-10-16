@@ -97,22 +97,41 @@ console.log('db connection established');
 
 app.post('/addUser', (req,res) => {
   console.log(req.body);
-  var newUser = new User ({
-        "username" : req.body.username,
-        "password" : req.body.password
-  });
-    
-  newUser.save(function (err, newUser) {
-    if(err) return console.error(er);
-    console.log("new user saved to db");
+  const { username, password } = req.body;
+
+  const newUser = new User({
+    'username': username,
+    'password': password
+  })
+
+  User.findOne( { 'username': username }, (err, userMatch) => {
+		if (userMatch) {
+      console.log("there is a user with that name")
+			return res.json({
+				error: `Sorry, already a user with the username: ${username}`
+			})
+    } 
+    else {
+      newUser.save(function (err, newUser) {
+        if(err) return console.error(er);
+        console.log("new user saved to db");
+      });
+    }
   });
 });
 
-app.get('/login', (req, res) => {
-  console.log('Inside GET /login callback function')
-  console.log(req.sessionID)
-  res.send(`You got the login page!\n`)
-})
+app.post('/loginUser', (req,res) => {
+  console.log(req.body);
+ 
+  passport.authenticate('local'),
+  (req, res) => {
+      console.log('logged in', req.user);
+      var userInfo = {
+          username: req.user.username
+      };
+      res.send(userInfo);
+  }
+});
 
 app.get('/authrequired', (req, res) => {
   console.log('Inside GET /authrequired callback')
